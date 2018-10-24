@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2041
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Netflox", "Netflox\Netflox.csproj", "{563E79BC-D676-4A3D-94BF-BFF3840A7D2E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{563E79BC-D676-4A3D-94BF-BFF3840A7D2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{563E79BC-D676-4A3D-94BF-BFF3840A7D2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{563E79BC-D676-4A3D-94BF-BFF3840A7D2E}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{563E79BC-D676-4A3D-94BF-BFF3840A7D2E}.Release|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {58E7C6FC-BEFF-4A43-A0F4-EF03055AEF45}
+	EndGlobalSection
+EndGlobal

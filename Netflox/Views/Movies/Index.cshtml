@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Netflox.Models.Movie>
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Director)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PicName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pic)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Director)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PicName)
+                </td>
+                <td>
+                    @{ if (@Html.DisplayFor(modelItem => item.PicName) != null)
+                        {
+                            <img src="https://anonvpn.net/images/@Html.DisplayFor(modelItem => item.PicName)" alt="Sample Image" width="25px" />
+                        }
+                    }
+                </td>
+
+                <td>
+
+                    <a asp-action="Edit" asp-route-id="@item.MovieId">Edit</a> |
+
+                    <a asp-action="Details" asp-route-id="@item.MovieId">Details</a> |
+
+                    <a asp-action="Delete" asp-route-id="@item.MovieId">Delete</a>
+
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+@{
+    if (ViewBag.pie == true)
+    {
+        Html.RenderPartial("_paginador", ViewData["partial"]);
+    }
+}

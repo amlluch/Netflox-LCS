@@ -1,0 +1,107 @@
+﻿@model Netflox.Models.Movie
+
+@{
+    ViewData["Title"] = "Edit";
+    var imagen = "https://anonvpn.net/images/" + Model.PicName;
+    var defVideo = Model.VideoName;
+    var video = "https://anonvpn.net/video/" + Model.VideoName;
+}
+
+<h2>Edit</h2>
+
+<h4>Movie</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit"  enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MovieId" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Director" class="control-label"></label>
+                <input asp-for="Director" class="form-control" />
+                <span asp-validation-for="Director" class="text-danger"></span>
+            </div>
+            @if (Model.PicName != null)
+            {
+                <img src="@imagen" alt="Sample Image" width="300px" />
+            }
+
+            <div class="form-group">
+                <label asp-for="Pic" class="control-label"></label>
+                <input asp-for="Pic" type="file" id="Imagen" name="Imagen" class="form-control" />
+                <span asp-validation-for="Pic" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    @*@Html.DropDownList("ActorId", ViewBag.ActorId,"Select an actor", new {id = "actoresdata", @class = "selectpicker", data_style = "btn-info" })*@
+                    @Html.DropDownList("ActorId", new SelectList(ViewBag.ActorId, "ActorId", "ActorName"), "Select an actor", new { id = "actoresdata", @class = "selectpicker", data_style = "btn-info" })
+                    <button type="button" id="buttonGetActor" class="btn btn-info" onClick="getActor()">Add Actor</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="VideoName" class="control-label"></label>
+                <label asp-for="VideoName" class="control-label">@Model.VideoName</label>
+            </div>
+            @if (Model.VideoName != null)
+            {
+                <video width="480" height="320" controls="controls" autoplay="autoplay">
+
+                    <source src="@video" type="video/mp4" />
+                </video>
+            }
+            <div class="form-group">
+                <label asp-for="Video" class="control-label"></label>
+                <input asp-for="Video" type="file" id="Video" name="Video" class="form-control" />
+                <span asp-validation-for="Video" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(document).ready(function () {
+            var cont = 0;
+//            $('#actoresdata').selectpicker({ liveSearch: true });
+        });
+        function getActor() {
+            var e = document.getElementById("actoresdata");
+            alert("Este es el valor: " + $('#actoresdata').val());
+        }
+
+    </script>
+    }
+    @*<script >
+        $(function () {
+            var url = "@Url.Action("NoActores")";
+            var pelicula = @Model.MovieId;
+            var data = { pelicula, pelicula };
+            $.post(url, data).done(function todoBien (data) {
+
+            }).fail(manejadorError).always(function () {
+                // aqui siempre se ejecuta
+            });
+        });
+
+        function manejadorError(error) {
+
+        }
+        function todoBien(data) {
+
+        }
+    </script>*@
+
+
