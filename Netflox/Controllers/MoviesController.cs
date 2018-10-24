@@ -129,6 +129,13 @@ namespace Netflox.Controllers
                  
             
             var movie = await _context.Movies.FindAsync(id);
+            var actorslist = (from actores in _context.Actors
+
+                                        where actores.MoviesLink.Any(c => c.MovieId == id)
+
+                                        select actores).ToList();
+            ViewData["actores"] = actorslist;
+            ViewBag.HayActor = actorslist != null;
             Actor actor = await _context.Actors.FirstOrDefaultAsync(x =>x.ActorId == 4);
 
 

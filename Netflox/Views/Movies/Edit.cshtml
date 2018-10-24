@@ -42,6 +42,12 @@
                     @Html.DropDownList("ActorId", new SelectList(ViewBag.ActorId, "ActorId", "ActorName"), "Select an actor", new { id = "actoresdata", @class = "selectpicker", data_style = "btn-info" })
                     <button type="button" id="buttonGetActor" class="btn btn-info" onClick="getActor()">Add Actor</button>
                 </div>
+                @{
+                    if (ViewBag.HayActor == true)
+                    {
+                        Html.RenderPartial("_Actorslist", ViewData["actores"]);
+                    }
+                }
             </div>
             <div class="form-group">
                 <label asp-for="VideoName" class="control-label"></label>
