@@ -10,14 +10,15 @@ namespace Netflox.Models
 {
     public class Actor
     {
- //       private Actor actor;
+        //       private Actor actor;
 
         //public Actor(Actor actor)
         //{
         //    this.actor = actor;
         //}
 
-        public Actor() {
+        public Actor()
+        {
             this.MoviesLink = new HashSet<MovieActor>();
         }
 
@@ -37,8 +38,8 @@ namespace Netflox.Models
         public byte[] Pc { get; set; }
         [Display(Name ="Picture File")]
         public string PicName { get; set; }
-        
-   //     public virtual ICollection<Movie> Movies { get; set; } 
-        public virtual ICollection<MovieActor>MoviesLink { get; set; }
+
+        //     public virtual ICollection<Movie> Movies { get; set; } 
+        public ICollection<MovieActor> MoviesLink { get; } = new List<MovieActor>();
     }
 }

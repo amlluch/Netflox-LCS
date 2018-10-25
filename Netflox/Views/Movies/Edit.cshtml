@@ -94,19 +94,26 @@
             var data = { id: id, actorId: actorId };
             $.get(url, data).done(function (data) {
                 if (data != null) {
+
                     $('#actorslist').append(data);
                 } else {
-                    $('#actorslist').hide();
+                    alert("Me viene sin datos");
+                    $('#dropdown').hide();
                 }
-            });
+            }).fail(function (errorMessage) {
+                // no data. hide div
+                alert("fallo en inicialización");
+                //$('#dropdown').hide();
+                });
 
             
         });
         function getActor() {
-            var e = document.getElementById("actoresdata");
-            var opcion = $('#actoresdata').val();
 
-            $('#actoresdata').prop("disabled", true);
+            var opcion = $('#actoresdata').val();
+            if (opcion === "") return;
+
+            $('#buttonGetActor').prop("disabled", true);
  //           alert("Este es el valor: " + $('#actoresdata').val());
             var url = "@Url.Action("ActorsList", "Movies")";
             var id = @Model.MovieId;
@@ -114,7 +121,8 @@
             var data = { id: id, actorId: actorId };
             $.get(url, data).done(function (data) {
                 if (data != null) {
-                    $('#actorslist').show();
+                    $('#dropdown').show();
+                    // remove actor option from select
                     $('#actoresdata option').each(function () {
                         if ($(this).val() == opcion) {
                             $(this).remove();
@@ -125,14 +133,37 @@
                     $('#actorslist').empty();
                     $('#actorslist').append(data);
                     $('#actoresdata').selectpicker("refresh");
-                    $('#actoresdata').prop("disabled", false);
+                    $('#buttonGetActor').prop("disabled", false);
                 } else {
                     alert("aquí pasa algo raro. me devolvió null");
 
                 }
             }).fail(function (mensajeError) {
-                alert("Aquí ha fallado todo");
+                alert("Aquí ha fallado todo: " + mensajeError.responseText);
             });
+        }
+        function removeActor(actorId, actorName, movieId) {
+            $('#remActor' + actorId).prop("disabled", true);
+            var url = "@Url.Action("RemoveActor", "Movies")";
+            var id = actorId;
+            var data = { id: id, movieId: movieId }
+            $.get(url, data).done(function (data) {
+                if (data != null) {
+                    // add actor option to select
+                    $('#actoresdata').append(new Option(actorName, actorId));
+                    $('#actoresdata').selectpicker("refresh");
+                    $('#actorslist').empty();
+                    $('#actorslist').append(data);
+                    $('#remActor' + actorId).prop("disabled", false);
+
+                } else {
+                    alert("viene vacío");
+                    $('#actoresdata').append(new Option(actorName, actorId));
+                    $('#actoresdata').selectpicker("refresh");
+                }
+            }).fail(function (mensajeError) {
+                alert("fallo masivo");
+                });
         }
 
     </script>

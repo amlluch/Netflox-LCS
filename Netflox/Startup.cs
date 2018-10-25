@@ -36,7 +36,7 @@ namespace Netflox
             });
 
             services.AddDbContext<Context>(options =>
-        options.UseMySql(Configuration.GetConnectionString("anonvpn")));
+        options.UseMySQL(Configuration.GetConnectionString("anonvpn")));
 //            services.AddAntiforgery(x => x.HeaderName = "XSRF-TOKEN");
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 

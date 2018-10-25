@@ -19,7 +19,7 @@ namespace Netflox.Models
         public Context(DbContextOptions<Context> options) : base (options) {}
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Actor> Actors { get; set; }
- //       public DbSet<MovieActor> MovieActors { get; set; }
+  //      public DbSet<MovieActor> MovieActors { get; set; }
 
 
 

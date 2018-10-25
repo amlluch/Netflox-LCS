@@ -35,7 +35,8 @@
             </td>
 
             <td>
-                <a asp-action="Delete" asp-route-id="@item.ActorId">Remove</a>
+                @*<a onclick="addActor(@item.ActorId, '@item.ActorName', @ViewBag.MovieId);">Remove</a>*@
+                <button type="button" id="@("remActor"+item.ActorId)" class="btn btn-info" onclick="removeActor(@item.ActorId, '@item.ActorName', @ViewBag.MovieId);">Remove</button>
             </td>
         </tr>
 }

@@ -12,13 +12,14 @@ namespace Netflox.Models
 {
     public class Movie
     {
- //       private Movie movie;
+        //       private Movie movie;
 
         //public Movie(Movie movie)
         //{
         //    this.movie = movie;
         //}
-        public Movie() {
+        public Movie()
+        {
             this.ActorsLink = new HashSet<MovieActor>();
         }
 
@@ -43,8 +44,9 @@ namespace Netflox.Models
         [StringLength(200)]
         public string VideoName { get; set; }
 
-  //      public virtual ICollection<Actor> Actors { get; set; } 
-        public virtual ICollection<MovieActor> ActorsLink { get; set; }
+        //      public virtual ICollection<Actor> Actors { get; set; } 
+
+        public ICollection<MovieActor> ActorsLink { get; } = new List<MovieActor>();
     }
 
  
