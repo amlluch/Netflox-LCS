@@ -121,41 +121,69 @@ namespace Netflox.Controllers
             //          ViewBag.ActorId = new SelectList(actores, nameof(Actor.ActorId), nameof(Actor.ActorName));
             //            ViewBag.ActorId = _context.Actors.OrderBy(x => x.ActorName).ToList();
 
-            ViewBag.ActorId = (from actores in _context.Actors
-                           
-                        where actores.MoviesLink.All(c => c.MovieId != id)
-                        
-                        select actores).ToList();
-                 
-            
+
             var movie = await _context.Movies.FindAsync(id);
-            var actorslist = (from actores in _context.Actors
-
-                                        where actores.MoviesLink.Any(c => c.MovieId == id)
-
-                                        select actores).ToList();
-            ViewData["actores"] = actorslist;
-            ViewBag.HayActor = actorslist != null;
-            Actor actor = await _context.Actors.FirstOrDefaultAsync(x =>x.ActorId == 4);
-
-
 
             if (movie == null)
             {
                 return NotFound();
-            }
-            else
-            {
-                _context.Movies.Attach(movie);
-                _context.Actors.Attach(actor);
-                //              actor.Movies.Add(movie);
+            } else {
 
-                //              movie.ActorsLink.Add(new MovieActor(actor));
+                //if (actorId != null)
+                //{
+                //    //If it is not null we are adding an actor to the movie
+                //    Actor actor = await _context.Actors.FirstOrDefaultAsync(x => x.ActorId == actorId);
+                //    _context.Actors.Attach(actor);
+                //    _context.Movies.Attach(movie);
+                //    movie.ActorsLink.Add(new MovieActor(actor));
+                //    await _context.SaveChangesAsync();
+                //}
 
-                await _context.SaveChangesAsync();
+                ViewBag.ActorId = (from actores in _context.Actors
+                                   where actores.MoviesLink.All(c => c.MovieId != id)
+                                   select actores).ToList();
+
+                //var actorslist = (from actores in _context.Actors
+                //            where actores.MoviesLink.Any(c => c.MovieId == id)
+                //            select actores).ToList();
+                //ViewData["actores"] = actorslist;
+                //ViewBag.HayActor = actorslist.Count != 0;
+
+
+                //                    await _context.SaveChangesAsync();
             }
             return View(movie);
         }
+
+        public async Task<PartialViewResult> ActorsList(int? id, int? actorId)
+        {
+            if (id != null)
+            {
+                var movie = await _context.Movies.FindAsync(id);
+                if (actorId != null)
+                {
+                    //If it is not null we are adding an actor to the movie
+                    Actor actor = await _context.Actors.FirstOrDefaultAsync(x => x.ActorId == actorId);
+
+                    _context.Movies.Attach(movie);
+                    movie.ActorsLink.Add(new MovieActor(actor));
+                    _context.Entry(movie).State = EntityState.Modified;
+
+                    await _context.SaveChangesAsync();
+
+                }
+                var actorslist = (from actores in _context.Actors
+                                  where actores.MoviesLink.Any(c => c.MovieId == id)
+                                  select actores).ToList();
+                if (actorslist.Count == 0) {
+                    return null;
+                } else {
+                    return PartialView("_Actorslist", actorslist);
+                }
+            } else { return null; }
+        }
+
+
 
         //Play: Movies/Play/5
         public async Task<IActionResult> Play(int? id)

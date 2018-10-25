@@ -1,8 +1,6 @@
 ﻿@model IEnumerable<Netflox.Models.Actor>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -14,9 +12,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Pc)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PicName)
             </th>
             <th></th>
         </tr>
@@ -31,15 +26,16 @@
                 @Html.DisplayFor(modelItem => item.Birthdate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Pc)
+                @*@Html.DisplayFor(modelItem => item.Pc)*@
+                @{ if (@Html.DisplayFor(modelItem => item.PicName) != null)
+                    {
+                        <img src="https://anonvpn.net/images/@Html.DisplayFor(modelItem => item.PicName)" alt="Sample Image" width="25px" />
+                    }
+                }
             </td>
+
             <td>
-                @Html.DisplayFor(modelItem => item.PicName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ActorId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ActorId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ActorId">Delete</a>
+                <a asp-action="Delete" asp-route-id="@item.ActorId">Remove</a>
             </td>
         </tr>
 }

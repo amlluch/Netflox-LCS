@@ -13,7 +13,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit"  enctype="multipart/form-data">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="MovieId" />
             <div class="form-group">
@@ -37,17 +37,20 @@
                 <span asp-validation-for="Pic" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <div class="row">
-                    @*@Html.DropDownList("ActorId", ViewBag.ActorId,"Select an actor", new {id = "actoresdata", @class = "selectpicker", data_style = "btn-info" })*@
+                <div id="dropdown" class="row">
                     @Html.DropDownList("ActorId", new SelectList(ViewBag.ActorId, "ActorId", "ActorName"), "Select an actor", new { id = "actoresdata", @class = "selectpicker", data_style = "btn-info" })
+
                     <button type="button" id="buttonGetActor" class="btn btn-info" onClick="getActor()">Add Actor</button>
                 </div>
-                @{
+
+            </div>
+            <div class="row" id="actorslist">
+                @*@{
                     if (ViewBag.HayActor == true)
                     {
                         Html.RenderPartial("_Actorslist", ViewData["actores"]);
                     }
-                }
+                }*@
             </div>
             <div class="form-group">
                 <label asp-for="VideoName" class="control-label"></label>
@@ -80,12 +83,56 @@
 
     <script>
         $(document).ready(function () {
+
+
             var cont = 0;
-//            $('#actoresdata').selectpicker({ liveSearch: true });
+            //$('#actoresdata').selectpicker({ liveSearch: true });
+            
+            var url = "@Url.Action("ActorsList", "Movies")";
+            var id = @Model.MovieId;
+            var actorId =null;
+            var data = { id: id, actorId: actorId };
+            $.get(url, data).done(function (data) {
+                if (data != null) {
+                    $('#actorslist').append(data);
+                } else {
+                    $('#actorslist').hide();
+                }
+            });
+
+            
         });
         function getActor() {
             var e = document.getElementById("actoresdata");
-            alert("Este es el valor: " + $('#actoresdata').val());
+            var opcion = $('#actoresdata').val();
+
+            $('#actoresdata').prop("disabled", true);
+ //           alert("Este es el valor: " + $('#actoresdata').val());
+            var url = "@Url.Action("ActorsList", "Movies")";
+            var id = @Model.MovieId;
+            var actorId = $('#actoresdata').val();
+            var data = { id: id, actorId: actorId };
+            $.get(url, data).done(function (data) {
+                if (data != null) {
+                    $('#actorslist').show();
+                    $('#actoresdata option').each(function () {
+                        if ($(this).val() == opcion) {
+                            $(this).remove();
+                        }
+                    });
+                    $('#actoresdata').selectpicker("refresh");
+
+                    $('#actorslist').empty();
+                    $('#actorslist').append(data);
+                    $('#actoresdata').selectpicker("refresh");
+                    $('#actoresdata').prop("disabled", false);
+                } else {
+                    alert("aquí pasa algo raro. me devolvió null");
+
+                }
+            }).fail(function (mensajeError) {
+                alert("Aquí ha fallado todo");
+            });
         }
 
     </script>
