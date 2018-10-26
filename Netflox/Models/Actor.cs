@@ -38,6 +38,13 @@ namespace Netflox.Models
         public byte[] Pc { get; set; }
         [Display(Name ="Picture File")]
         public string PicName { get; set; }
+        [NotMapped]
+        [Display(Name="Name")]
+        public string Name { get { return ActorName; } }
+        [NotMapped]
+        [DataType(DataType.Date)]
+        [Display(Name="Birth Date")]
+        public DateTime Fecha { get { return Birthdate; } }
 
         //     public virtual ICollection<Movie> Movies { get; set; } 
         public virtual ICollection<MovieActor> MoviesLink { get; } = new List<MovieActor>();

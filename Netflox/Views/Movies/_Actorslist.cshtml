@@ -1,14 +1,13 @@
 ﻿@model IEnumerable<Netflox.Models.Actor>
 
-
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ActorName)
+                @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Birthdate)
+                @Html.DisplayNameFor(model => model.Fecha)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Pc)
@@ -20,10 +19,10 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ActorName)
+                @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Birthdate)
+                @Html.DisplayFor(modelItem => item.Fecha)
             </td>
             <td>
                 @*@Html.DisplayFor(modelItem => item.Pc)*@
