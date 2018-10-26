@@ -42,14 +42,6 @@ namespace Netflox.Models
             modelBuilder.Entity<Movie>().Property(x => x.MovieId).ValueGeneratedOnAdd();
             modelBuilder.Entity<Actor>().Property(x => x.ActorId).ValueGeneratedOnAdd();
             modelBuilder.Entity<MovieActor>().HasKey(t => new { t.MovieId, t.ActorId });
-            //modelBuilder.Entity<Movie>().HasMany<MovieActor>(x => x.ActorsLink);
-            //modelBuilder.Entity<Actor>().HasMany<MovieActor>(x => x.MoviesLink);
-  //          modelBuilder.Entity<Actor>().HasMany<Movie>(x => x.Movies);
-  //          modelBuilder.Entity<Movie>().HasMany<Actor>(x => x.Actors);
-
-            //modelBuilder.Entity<Movie>().HasMany<Actor>(x => x.Actors);
-            //modelBuilder.Entity<Actor>().HasMany<Movie>(x => x.Movies);
-
 
 
         }

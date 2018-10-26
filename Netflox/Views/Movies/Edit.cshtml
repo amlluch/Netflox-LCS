@@ -87,7 +87,7 @@
 
             var cont = 0;
             //$('#actoresdata').selectpicker({ liveSearch: true });
-            
+            $('#actoresdata').selectpicker({ "data-live-search": true });
             var url = "@Url.Action("ActorsList", "Movies")";
             var id = @Model.MovieId;
             var actorId =null;
@@ -102,7 +102,7 @@
                 }
             }).fail(function (errorMessage) {
                 // no data. hide div
-                alert("fallo en inicialización");
+       //         alert("fallo en inicialización");
                 //$('#dropdown').hide();
                 });
 
@@ -168,24 +168,6 @@
 
     </script>
     }
-    @*<script >
-        $(function () {
-            var url = "@Url.Action("NoActores")";
-            var pelicula = @Model.MovieId;
-            var data = { pelicula, pelicula };
-            $.post(url, data).done(function todoBien (data) {
-
-            }).fail(manejadorError).always(function () {
-                // aqui siempre se ejecuta
-            });
-        });
-
-        function manejadorError(error) {
-
-        }
-        function todoBien(data) {
-
-        }
-    </script>*@
+    
 
 

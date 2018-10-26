@@ -40,6 +40,6 @@ namespace Netflox.Models
         public string PicName { get; set; }
 
         //     public virtual ICollection<Movie> Movies { get; set; } 
-        public ICollection<MovieActor> MoviesLink { get; } = new List<MovieActor>();
+        public virtual ICollection<MovieActor> MoviesLink { get; } = new List<MovieActor>();
     }
 }

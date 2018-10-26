@@ -288,8 +288,28 @@ namespace Netflox.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var movie = await _context.Movies.FindAsync(id);
-            _context.Movies.Remove(movie);
+            
+            var movie = await _context.Movies.Include(x => x.ActorsLink).FirstOrDefaultAsync(x => x.MovieId == id);
+ //           var actor = await _context.Actors.FirstOrDefaultAsync(x => x.MoviesLink.FirstOrDefault(y => y.MovieId == id).MovieId == id);
+            
+            var movieBorrar = await _context.Movies.FindAsync(id);
+
+            
+            var actores = _context.Actors.Where(x => x.MoviesLink.FirstOrDefault(y => y.MovieId == id).MovieId == id).ToList();
+
+            foreach (var actor in actores)
+            {
+
+                foreach (var movieActor in actor.MoviesLink.Where(at => at.MovieId == id).ToList())
+
+                {
+                        actor.MoviesLink.Remove(movieActor);
+                 
+                }
+            }
+
+            
+            _context.Movies.Remove(movieBorrar);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

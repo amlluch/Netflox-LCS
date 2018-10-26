@@ -12,11 +12,11 @@ namespace Netflox.Models
 
         public MovieActor(Movie movie)
         {
-            this.Movie = movie;
+            Movie = movie;
         }
         public MovieActor(Actor actor)
         {
-            this.Actor = actor;
+            Actor = actor;
         }
         public MovieActor() { }
 

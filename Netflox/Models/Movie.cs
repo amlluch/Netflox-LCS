@@ -46,7 +46,7 @@ namespace Netflox.Models
 
         //      public virtual ICollection<Actor> Actors { get; set; } 
 
-        public ICollection<MovieActor> ActorsLink { get; } = new List<MovieActor>();
+        public virtual ICollection<MovieActor> ActorsLink { get; } = new List<MovieActor>();
     }
 
  
