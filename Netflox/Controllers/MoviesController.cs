@@ -146,7 +146,6 @@ namespace Netflox.Controllers
 
                     _context.Movies.Attach(movie);
                     movie.ActorsLink.Add(new MovieActor(actor));
-  //                  _context.Entry(movie).State = EntityState.Modified;
 
                     await _context.SaveChangesAsync();
 
@@ -165,15 +164,10 @@ namespace Netflox.Controllers
 
         public async Task<PartialViewResult> RemoveActor(int id, int? movieId)
         {
-            var actor = await _context.Actors.FirstOrDefaultAsync(x => x.ActorId == id);
-            var movie = await _context.Movies.Include(x=>x.ActorsLink).FirstOrDefaultAsync(x => x.MovieId == movieId);
-            _context.Movies.Attach(movie);
-            _context.Actors.Attach(actor);
-  //          actor.MoviesLink.Remove(new MovieActor(actor));
-            foreach (var movieActor in actor.MoviesLink.Where(at => at.MovieId == movieId).ToList())
-            {
-                actor.MoviesLink.Remove(movieActor);
-            }
+            var actor = await _context.Actors.Include(x=>x.MoviesLink).FirstOrDefaultAsync(x => x.ActorId == id);
+
+            var movieActor = actor.MoviesLink.FirstOrDefault(at => at.MovieId == movieId);
+            actor.MoviesLink.Remove(movieActor);
 
             await _context.SaveChangesAsync();
             var actorslist = (from actores in _context.Actors
@@ -289,23 +283,14 @@ namespace Netflox.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             
-            var movie = await _context.Movies.Include(x => x.ActorsLink).FirstOrDefaultAsync(x => x.MovieId == id);
- //           var actor = await _context.Actors.FirstOrDefaultAsync(x => x.MoviesLink.FirstOrDefault(y => y.MovieId == id).MovieId == id);
-            
             var movieBorrar = await _context.Movies.FindAsync(id);
-
             
-            var actores = _context.Actors.Where(x => x.MoviesLink.FirstOrDefault(y => y.MovieId == id).MovieId == id).ToList();
+            var actores = _context.Actors.Include(y => y.MoviesLink).Where(x => x.MoviesLink.FirstOrDefault(y => y.MovieId == id).MovieId == id).ToList();
 
             foreach (var actor in actores)
             {
-
-                foreach (var movieActor in actor.MoviesLink.Where(at => at.MovieId == id).ToList())
-
-                {
-                        actor.MoviesLink.Remove(movieActor);
-                 
-                }
+                var movieActor = actor.MoviesLink.FirstOrDefault(at => at.MovieId == id);
+                actor.MoviesLink.Remove(movieActor);
             }
 
             

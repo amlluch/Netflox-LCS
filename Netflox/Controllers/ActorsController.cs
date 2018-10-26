@@ -197,22 +197,17 @@ namespace Netflox.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
 
-            var actor = _context.Actors.Include(x => x.MoviesLink).FirstOrDefault(x => x.ActorId == id);
-            var actorBorrar = await _context.Actors.FindAsync(id);
-            var movies =  _context.Movies.Where(x => x.ActorsLink.FirstOrDefault(y => y.ActorId == id).ActorId == id).ToList();
+            var actor = await _context.Actors.FindAsync(id);
+            var movies =  _context.Movies.Include(z => z.ActorsLink).Where(x => x.ActorsLink.FirstOrDefault(y => y.ActorId == id).ActorId == id).ToList();
             foreach (var movie in movies)
             {
+               var movieActor = movie.ActorsLink.FirstOrDefault(at => at.ActorId == id);
+                movie.ActorsLink.Remove(movieActor);
 
-                foreach (var movieActor in movie.ActorsLink.Where(at => at.ActorId == id).ToList())
-
-                {
-                    movie.ActorsLink.Remove(movieActor);
-
-                }
             }
 
             
-            _context.Actors.Remove(actorBorrar);
+            _context.Actors.Remove(actor);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
