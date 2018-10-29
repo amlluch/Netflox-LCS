@@ -80,8 +80,7 @@ namespace Netflox
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
 
-
-
+  
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             //            services.AddIdentity<NetfloxUser, IdentityRole>()

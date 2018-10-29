@@ -2,6 +2,10 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost/Netflox",
+      "sslPort": 0
+    },
     "iisExpress": {
       "applicationUrl": "http://localhost:53893",
       "sslPort": 44374
@@ -16,7 +20,7 @@
       }
     },
     "Netflox": {
-      "commandName": "Project",
+      "commandName": "Executable",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
