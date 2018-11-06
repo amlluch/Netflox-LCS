@@ -53,6 +53,16 @@
     </a>
 </div>
 
+<video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="640" height="264">
+    <source src="https://anonvpn.net:8085/live/show/index.m3u8" type="application/x-mpegURL" />
+</video>
+
+<script>
+    var player = videojs('#my-video');
+    player.play();
+</script>
+
+
 <div class="row">
     <div class="col-md-3">
         <h2>Application uses</h2>
